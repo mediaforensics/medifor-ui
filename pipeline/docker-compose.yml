@@ -1,0 +1,302 @@
+# Ansible managed
+version: "2"
+
+networks:
+  mfnet:
+
+services:
+  pgmedifor:
+    image: "postgres:11"
+    restart: always
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata 
+    networks:
+      - mfnet
+    ports:
+      - "5432:5432"
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/pgsql:/var/lib/postgresql/data"
+
+  eqmedifor:
+    image: "shiblon/entroq:v0.2"
+    restart: always
+    command:
+      - "pg"
+      - "--dbaddr=pgmedifor:5432"
+      - "--attempts=10"
+    networks:
+      - mfnet
+
+  analytic_workflow:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "analyticworkflow"
+      - "--pgaddr=pgmedifor:5432"
+      - "--eqaddr=eqmedifor:37706"
+      - "--analytic_config=/analytic_config.json"
+      - "--listen=:50051"
+    volumes :
+      - ../pipeline/config/analytic_config.json:/analytic_config.json
+    networks:
+      - mfnet
+    ports:
+      - "50051:50051"
+
+
+  
+# === Analytic Containers ===
+# Containers for image
+
+  #ela-base
+  ac_ela-base:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_ela-base:2019-11-14T17-17-26f378000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_ela-base:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "analyticworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_ela-base:50051"
+      - "--id=ela-base"
+    networks:
+      - mfnet
+
+  #colorphenomenology
+  ac_colorphenomenology:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/bmiller_s_fibber-cpt-proto_s_colorphenomenology:2019-03-07T18-36-48f596000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_colorphenomenology:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "analyticworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_colorphenomenology:50051"
+      - "--id=colorphenomenology"
+    networks:
+      - mfnet
+
+  #umdgsrnet
+  ac_umdgsrnet:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/bchen2_s_umd__gsrnet:2019-10-04T17-29-34f427000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_umdgsrnet:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "analyticworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_umdgsrnet:50051"
+      - "--id=umdgsrnet"
+    networks:
+      - mfnet
+
+  #splicebuster-face
+  ac_splicebuster-face:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/uscisi__ta11_s_sb__face:2019-03-09T12-59-24f883000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_splicebuster-face:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "analyticworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_splicebuster-face:50051"
+      - "--id=splicebuster-face"
+    networks:
+      - mfnet
+
+
+
+# Containers for video
+
+  #unifi-ed209
+  ac_unifi-ed209:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/unifi-fence_s_unifi__ed209:2019-04-04T10-08-41f615000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_unifi-ed209:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "analyticworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_unifi-ed209:50051"
+      - "--id=unifi-ed209"
+    networks:
+      - mfnet
+
+  #kitware-deepfake-video
+  ac_kitware-deepfake-video:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_ualbany-headpose-forensic:2019-03-22T23-14-13f299000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_kitware-deepfake-video:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "analyticworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_kitware-deepfake-video:50051"
+      - "--id=kitware-deepfake-video"
+    networks:
+      - mfnet
+
+  #luisa
+  ac_luisa:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/uscisi__ta11_s_face__cnn__video:2019-09-12T17-27-14f027164
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_luisa:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "analyticworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_luisa:50051"
+      - "--id=luisa"
+    networks:
+      - mfnet
+
+
+
+# Containers for fusion
+
+  #ta2-combo
+  ac_ta2-combo:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-16T16-44-24f533000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_ta2-combo:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "fusionworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_ta2-combo:50051"
+      - "--id=ta2-combo"
+    networks:
+      - mfnet
+
+  #ta2avg
+  ac_ta2avg:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-12T19-54-07f733000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_ta2avg:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "fusionworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_ta2avg:50051"
+      - "--id=ta2avg"
+    networks:
+      - mfnet
+
+  #tauo
+  ac_tauo:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/uo_s_fusion:2019-06-24T21-16-58f105000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_tauo:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "fusionworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_tauo:50051"
+      - "--id=tauo"
+    networks:
+      - mfnet
+
+  #gan
+  ac_gan:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-12T19-54-42f909000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_gan:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "fusionworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_gan:50051"
+      - "--id=gan"
+    networks:
+      - mfnet
+
+  #multi
+  ac_multi:
+    image: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-16T16-43-51f527000
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+  aw_multi:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "fusionworker"
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_multi:50051"
+      - "--id=multi"
+    networks:
+      - mfnet
+
+

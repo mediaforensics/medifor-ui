@@ -1,0 +1,32 @@
+- name: Copy Localhost files
+  hosts: localhost
+  gather_facts: false
+  tags:
+    - localfiles
+  tasks:
+    - name: Generate config
+      template:
+        src: "templates/config.json"
+        dest: "{{medifor_dir}}/{{ env }}.json"
+    - name : Generate analytics config
+      template:
+        src : "templates/analytic_config.json"
+        dest: "{{config_file_dir}}/analytic_config.json"
+    - name: Generate nodemon
+      template:
+        src: "templates/nodemon.json"
+        dest: "../server/nodemon.json"
+    - name: Generate pipeline docker compose
+      template:
+        src: "templates/{{item}}"
+        dest: "../pipeline"
+      loop:
+        - .env
+        - docker-compose.yml
+    - set_fact:
+        include_ui: true
+    - name: Generate pipeline plus ui docker compose
+      when: inventory_hostname == "localhost"
+      template:
+        src: "templates/docker-compose.yml"
+        dest: "../pipeline/docker-compose-full.yml"

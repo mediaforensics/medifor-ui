@@ -1,0 +1,76 @@
+
+medifor_demo_data_dir: /tmp/analyticsui
+config_file_dir: ../pipeline/config
+medifor_dir: ../server/config
+container_data_dir: /medifor
+include_ui: false
+include_gt: false
+env: "development"
+
+
+
+containers:
+  image:
+    - id: ela-base
+      name: Error Level Analysis
+      description: Identifying areas within an image that are at different compression levels
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_ela-base:2019-11-14T17-17-26f378000
+    - id: colorphenomenology
+      name: Colorphenomenology
+      description: Colorphenomenology description
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/bmiller_s_fibber-cpt-proto_s_colorphenomenology:2019-03-07T18-36-48f596000
+    - id: umdgsrnet
+      name: Spatial Image Tampering Detection
+      description: UMD - A network trained to score tampered/authentic pixels in an image
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/bchen2_s_umd__gsrnet:2019-10-04T17-29-34f427000
+    - id: splicebuster-face
+      name: Face Forgery Detector based on Splicebuster
+      description: splace face description
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/uscisi__ta11_s_sb__face:2019-03-09T12-59-24f883000
+    - id: groundtruth
+      name: Ground Truth
+      description: NIST - Ground Truth from the NIST eval datasets
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/medifor_s_medifor-proto-python-starter:2019-10-16T22-50-42f256000
+  video:
+    - id: unifi-ed209
+      name: Structure-Based Integrity Verification
+      description: Unifi - Video integrity is assessed based on a dataset of reference video containers. When possible, the most plausible video origin is also produced.
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/unifi-fence_s_unifi__ed209:2019-04-04T10-08-41f615000
+    - id: kitware-deepfake-video
+      name: DeepFake Orientation Video
+      description: Kitware UAlbany - An approach to expose DeepFake facial videos by analyzing the signature in face orientation estimation.
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_ualbany-headpose-forensic:2019-03-22T23-14-13f299000
+    - id: luisa
+      name: CNN-based Video Face Forgery Detector
+      description: USCISI Ta11 -Luisa Deepfake face description
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/uscisi__ta11_s_face__cnn__video:2019-09-12T17-27-14f027164
+    - id: groundtruth
+      name: Ground Truth
+      description: NIST - Ground Truth from the NIST eval datasets
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/medifor_s_medifor-proto-python-starter:2019-10-16T22-50-42f256000
+  fusion:
+    - id: ta2-combo
+      name: Boosted Manipulation Detection
+      description: Identifies manipulated media (both images and videos) trained on demo VIP image analytic list boosting the most accurate scores based on the varying patterns of the analytics results
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-16T16-44-24f533000
+      handles: ["image","video"]
+    - id: ta2avg
+      name: Image Averaging Fusion
+      description: Averages all analytic input scores available to calculate score
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-12T19-54-07f733000
+      handles: ["image"]
+    - id: tauo
+      name: Overall Image Fusion
+      description: University of Oregon boosted fusion. Trained on full analytic list
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/uo_s_fusion:2019-06-24T21-16-58f105000
+      handles: ["image"]
+    - id: gan
+      name: GAN Fusion
+      description: Identifies GAN images based on fused GAN specific analytic results
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-12T19-54-42f909000
+      handles: ["image"]
+    - id: multi
+      name: Manipulation Type Estimator
+      description: Fusion trained to predict multiple classes based on high level manipulation types
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-16T16-43-51f527000
+      handles: ["image"]

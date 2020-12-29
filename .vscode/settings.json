@@ -1,0 +1,19 @@
+{
+  "eslint.enable": true,
+  "eslint.run": "onType",
+"eslint.validate": [
+  "vue",
+  "html",
+  "javascript",
+  "javascriptreact"
+],
+
+  "eslint.alwaysShowStatus": true,
+  "javascript.format.enable": false,
+  "vetur.format.defaultFormatter.js": "prettier",
+  "vetur.format.defaultFormatter.css": "prettier",
+  "vetur.format.defaultFormatter.html": "prettier",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}

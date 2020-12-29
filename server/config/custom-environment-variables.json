@@ -1,0 +1,18 @@
+{
+  "WORKING_DIR": "WORKING_DIR",
+  "CONTAINER_ROOT": "CONTAINER_ROOT",
+  "WORKFLOW_HOST": "WORKFLOW_HOST",
+  "WORKFLOW_PORT": "WORKFLOW_PORT",
+  "PORT": "PORT",
+  "UI" : {
+    "enableGroups": "UI_ENABLE_GROUPS",
+    "unknownUsers": "UI_UNKOWN_USERS", // Indicates how to handle unknown users ( "deny" | "allow")
+    "groupPrefix": "UI_GROUP_PREFIX",
+    "enableDelete": "UI_ENABLE_DELETE",
+    "groupTagPrefix": "UI_GROUP_TAG_PREFIX",
+    "defaultFuserId": "UI_DEFAULT_FUSER_ID",
+    "tagPrefixFlag": "UI_TAG_PREFIX_FLAG",
+    "userTagPrefix" : "UI_USER_TAG_PREFIX"
+  },
+  "CACHE_TTL_SECONDS": "CACHE_TTL_SECONDS"
+}  

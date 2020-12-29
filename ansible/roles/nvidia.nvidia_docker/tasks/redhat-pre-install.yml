@@ -1,0 +1,23 @@
+---
+- name: remove packages
+  yum:
+    name:
+      - nvidia-docker
+      - nvidia-docker2
+    state: absent
+    autoremove: yes
+
+- name: add repo
+  get_url:
+    url: "{{ nvidia_docker_repo_base_url }}/{{ _rhel_repo_dist_name }}/{{ _rhel_repo_file_name }}"
+    dest: "{{ _rhel_repo_file_path }}"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: install packages
+  yum:
+    name: nvidia-container-runtime
+    state: present
+    update_cache: yes
+  notify: reload docker

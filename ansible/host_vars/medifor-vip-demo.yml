@@ -1,0 +1,5 @@
+ansible_python_interpreter: /usr/bin/python3
+include_gt: false
+analytic_worker_tag: develop-20201008-192551
+medifor_ui_docker_tag: master
+medifor_ui_enableGroups: true

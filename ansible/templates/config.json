@@ -1,0 +1,57 @@
+#jinja2: lstrip_blocks: "true", trim_blocks: "true"
+// {{ ansible_managed }}
+{ 
+  "CONTAINER_ROOT": "{{ container_data_dir }}",
+  "WORKFLOW_HOST": "{{ workflow_host }}",
+  "WORKFLOW_PORT": "{{ workflow_port }}",
+  "PORT": "{{ medifor_ui_port }}",
+  "CACHE_TTL_SECONDS": "{{ medifor_ui_cache_seconds }}",
+  "UI" : {
+    "defaultFuserId": 
+    {%- if medifor_defaultFuserId is defined %} "{{medifor_defaultFuserId}}" 
+      {%- else %} ""
+    {% endif %},
+    "enableGroups": {{ medifor_ui_enableGroups | to_json }},
+    "enableDelete": {{ medifor_ui_enableDelete | to_json }},
+    "tagPrefixFlag": "{{medifor_ui_tagPrefixFlag}}",
+    "userTagPrefix": "{{medifor_ui_userTagPrefix}}"
+    {%- if medifor_ui_enableGroups %},
+    "unknownUsers":"{{ medifor_ui_unknownUsers }}", // Indicates how to handle unknown users ( "deny" | "allow")
+    "groupPrefix": "{{ medifor_ui_groupPrefix }}",
+    "groupTagPrefix": "{{ medifor_ui_groupTagPrefix }}"
+    {% endif %}
+  },
+  "FACETS" : 
+   [
+      { "name" : "AntiForensics",
+        "description" : "Any techniques that erase processing history of image manipulations"
+      },
+      { "name" : "FaceManipulation",
+        "description" : "Any manipulation done to a face (including GAN)"
+      },
+      { "name" : "GAN",
+        "description" : "Any operations that use GAN-based techniques locally/globally"
+      },
+      { "name" : "Laundering",
+        "description" : "Disguise the original ownership or source of the media via characteristic feature tampering"
+      },
+      { "name" : "Physical",
+        "description" : "Add shadows or sources of reflection that were not originally present"
+      },
+      { "name" : "Recapture",
+        "description" : "Recapture an image through a digital photo of a picture or screen shot"
+      },
+      { "name" : "Reformat",
+        "description" : "Changing the media compression or file format"
+      },
+      { "name" : "SeamCarving",
+        "description" : "Resize an image while preserving the integrity of content"
+      },
+      {
+        "name" :"SemanticAlteration",
+        "description" : "Changing the meaning of media"
+      }
+   ]
+  }
+
+  

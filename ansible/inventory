@@ -1,0 +1,19 @@
+localhost           ansible_connection=local
+
+[mediforservers:children]
+nogpu
+onegpu
+fourgpu
+
+[nogpu]
+console             ansible_host=10.107.6.60
+
+[onegpu]
+medifor-console     ansible_host=10.107.5.174 ansible_user=ubuntu
+
+[fourgpu]
+medifor-vip-demo    ansible_host=10.107.36.61 ansible_user=ubuntu
+
+
+
+

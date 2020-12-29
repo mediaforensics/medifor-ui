@@ -1,0 +1,106 @@
+{ 
+  "analytics": [
+    {
+      "description": "Identifying areas within an image that are at different compression levels",
+      "id": "ela-base",
+      "media": [
+        "IMAGE"
+      ],
+      "name": "Error Level Analysis"
+    },
+    {
+      "description": "Colorphenomenology description",
+      "id": "colorphenomenology",
+      "media": [
+        "IMAGE"
+      ],
+      "name": "Colorphenomenology"
+    },
+    {
+      "description": "UMD - A network trained to score tampered/authentic pixels in an image",
+      "id": "umdgsrnet",
+      "media": [
+        "IMAGE"
+      ],
+      "name": "Spatial Image Tampering Detection"
+    },
+    {
+      "description": "splace face description",
+      "id": "splicebuster-face",
+      "media": [
+        "IMAGE"
+      ],
+      "name": "Face Forgery Detector based on Splicebuster"
+    },
+    {
+      "description": "Unifi - Video integrity is assessed based on a dataset of reference video containers. When possible, the most plausible video origin is also produced.",
+      "id": "unifi-ed209",
+      "media": [
+        "VIDEO"
+      ],
+      "name": "Structure-Based Integrity Verification"
+    },
+    {
+      "description": "Kitware UAlbany - An approach to expose DeepFake facial videos by analyzing the signature in face orientation estimation.",
+      "id": "kitware-deepfake-video",
+      "media": [
+        "VIDEO"
+      ],
+      "name": "DeepFake Orientation Video"
+    },
+    {
+      "description": "USCISI Ta11 -Luisa Deepfake face description",
+      "id": "luisa",
+      "media": [
+        "VIDEO"
+      ],
+      "name": "CNN-based Video Face Forgery Detector"
+    },
+    {
+      "description": "Identifies manipulated media (both images and videos) trained on demo VIP image analytic list boosting the most accurate scores based on the varying patterns of the analytics results",
+      "id": "ta2-combo",
+      "media": [
+        "FUSION_IMAGE",
+        "FUSION_VIDEO"
+      ],
+      "name": "Boosted Manipulation Detection"
+    },
+    {
+      "description": "Averages all analytic input scores available to calculate score",
+      "id": "ta2avg",
+      "media": [
+        "FUSION_IMAGE"
+      ],
+      "name": "Image Averaging Fusion"
+    },
+    {
+      "description": "University of Oregon boosted fusion. Trained on full analytic list",
+      "id": "tauo",
+      "media": [
+        "FUSION_IMAGE"
+      ],
+      "name": "Overall Image Fusion"
+    },
+    {
+      "description": "Identifies GAN images based on fused GAN specific analytic results",
+      "id": "gan",
+      "media": [
+        "FUSION_IMAGE"
+      ],
+      "name": "GAN Fusion"
+    },
+    {
+      "description": "Fusion trained to predict multiple classes based on high level manipulation types",
+      "id": "multi",
+      "media": [
+        "FUSION_IMAGE"
+      ],
+      "name": "Manipulation Type Estimator"
+    }
+  ]
+}
+
+
+
+
+

@@ -1,0 +1,33 @@
+---
+- name: check distro
+  fail:
+    msg: "distro {{ ansible_facts['distribution'] }} not supported"
+  when: ansible_facts['distribution'] != 'Ubuntu' and ansible_os_family != 'RedHat'
+
+- name: ubuntu pre-install tasks
+  include_tasks: ubuntu-pre-install.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: redhat family pre-install tasks
+  include_tasks: redhat-pre-install.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: set docker daemon configuration
+  copy:
+    content: "{{ docker_daemon_json | to_nice_json }}"
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload docker
+
+# We could use the "nvidia-docker2" package to install this wrapper for us.
+# Instead, we grab the wrapper directly to avoid packaging issues stemming from
+#   docker version pinning in the nvidia-docker2 package.
+- name: grab nvidia-docker wrapper
+  get_url:
+    url: "{{ nvidia_docker_wrapper_url }}"
+    dest: /usr/local/bin/nvidia-docker
+    mode: 0755
+    owner: root
+    group: root

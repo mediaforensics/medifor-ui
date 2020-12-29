@@ -1,0 +1,90 @@
+---
+- name: Install Ansible Docker prereqs
+  hosts: mediforservers
+  gather_facts: false
+  become: yes
+  tags:
+    - docker
+  tasks:
+    - name: Update repositories cache and install "pip" packages
+      apt:
+        name: "{{item}}"
+        update_cache: yes
+      loop:
+        - python3-pip
+    # - name: fix
+    #   pip:
+    #     name: docker-py
+    #     state: absent
+    - name: Ensure ansible docker prereqs are installed
+      pip:
+        name:
+          - docker >= 1.20
+          - pyyaml >= 3.11
+          - docker-compose >= 1.7.0
+
+- name: Setup pipeline
+  hosts: mediforservers
+  gather_facts: false
+  tags:
+    - pipeline
+  tasks:
+    #- debug:
+    #    var: additional_containers
+    - name: make medifor dir
+      file:
+        path: "{{ medifor_dir }}"
+        state: directory
+    - name: copy
+      template:
+        src: "templates/{{item}}"
+        dest: "{{ medifor_dir }}"
+      loop:
+        - .env
+        - docker-compose.yml
+    - name: Generate config
+      template:
+        src: "templates/config.json"
+        dest: "{{ medifor_dir }}/{{ env }}.json"
+    - name : Generate analytics config
+      template:
+        src : "templates/analytic_config.json"
+        dest: "{{config_file_dir}}/analytic_config.json"
+    - name: Log into private registry
+      docker_login:
+        registry: gitlab-registry.mediforprogram.com
+        username: evega
+        password: B82RFQQ_7PqQ4ykAkNB1
+        #reauthorize: yes
+    - name: start compose
+      docker_compose:
+        project_src: "{{ medifor_dir }}"
+        pull: yes
+        remove_orphans: yes
+        debug: yes
+      register: output
+    - name: restart ui and aw
+      docker_compose:
+        project_src: "{{ medifor_dir }}"
+        restarted: yes
+        services: 
+          - analytic_workflow
+          - medifor_ui
+        debug: yes
+
+- name: Set backup on machines
+  hosts: mediforservers
+  gather_facts: false
+  tags:
+    - backup
+  tasks:
+    - name: Create backup folder if it does not exist
+      file:
+        path: "{{medifor_backup_dir}}"
+        state: directory
+        #mode: '0755'
+    - name: Setup cron job
+      template:
+        src: "templates/mediforBackup.sh"
+        dest: "/etc/cron.daily/mediforBackup"
+        mode: "0751"

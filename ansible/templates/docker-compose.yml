@@ -1,0 +1,115 @@
+#jinja2: lstrip_blocks: "true", trim_blocks: "true"
+# {{ ansible_managed }}
+version: "2"
+
+networks:
+  mfnet:
+
+services:
+  pgmedifor:
+    image: "gitlab-registry.mediforprogram.com/medifor/program-registry/postgres:11"
+    restart: always
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata 
+    networks:
+      - mfnet
+    ports:
+      - "5432:5432"
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/pgsql:/var/lib/postgresql/data"
+
+  eqmedifor:
+    image: "gitlab-registry.mediforprogram.com/medifor/program-registry/entroq:v0.2"
+    restart: always
+    command:
+      - "pg"
+      - "--dbaddr=pgmedifor:5432"
+      - "--attempts=10"
+    networks:
+      - mfnet
+
+  analytic_workflow:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      - "analyticworkflow"
+      - "--pgaddr=pgmedifor:5432"
+      - "--eqaddr=eqmedifor:37706"
+      - "--analytic_config=/analytic_config.json"
+      - "--listen=:50051"
+    volumes :
+      - {{config_file_dir}}/analytic_config.json:/analytic_config.json
+    networks:
+      - mfnet
+    ports:
+      - "50051:50051"
+
+{% if include_ui %}
+  medifor_ui:
+    image: "gitlab-registry.mediforprogram.com/medifor/medifor-demo-ui:{{medifor_ui_docker_tag}}"
+    restart: always
+    networks:
+      - mfnet
+    environment:
+      - CONTAINER_ROOT=${CONTAINER_DATA_DIR}
+      - WORKFLOW_HOST=${WORKFLOW_HOST}
+      - WORKFLOW_PORT=${WORKFLOW_PORT}
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}:${CONTAINER_DATA_DIR}"
+      - {{medifor_dir}}/{{env}}.json:/usr/src/app/config/production.json
+    ports:
+      - "3000:3000"
+{% endif %}
+
+  
+# === Analytic Containers ===
+{% for type in containers %}
+# Containers for {{type}}
+{% if additional_containers is defined and additional_containers[type] is defined %}
+  {% set containers_in_type = containers[type] + additional_containers[type] %}
+{% else %}
+  {% set containers_in_type = containers[type] %}
+{% endif %}
+
+{% for image in containers_in_type %}
+  {% if "groundtruth" not in image.id or include_gt %}
+  #{{image.id}}
+  ac_{{ image.id }}:
+    image: {{image.container}}
+    restart: "always"
+    networks:
+      - mfnet
+    volumes:
+      - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
+      - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
+      {% if "groundtruth" in image.id %}
+      - "/mnt/medifor/datasets:/mnt/medifor/datasets"
+      - "/mnt/reference:/mnt/reference"
+      {% endif %}
+    {%if image.gpu_num is defined %}
+    environment:
+      -  NVIDIA_VISIBLE_DEVICES={{image.gpu_num}}
+    {% endif %}
+  aw_{{ image.id }}:
+    image: "gitlab-registry.mediforprogram.com/medifor/analytic-worker/analyticworker:${ANALYTIC_WORKER_TAG}"
+    restart: always
+    command:
+      {% if 'fusion' == type%}
+      - "fusionworker"
+      {% else %}
+      - "analyticworker"
+      {% endif %}
+      - "--eqaddr=eqmedifor:37706"
+      - "--backend=ac_{{ image.id}}:50051"
+      - "--id={{ image.id }}"
+    networks:
+      - mfnet
+  {% else %}
+  {% endif %}
+
+{% endfor %}
+
+{% endfor %}

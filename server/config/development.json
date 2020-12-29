@@ -1,0 +1,47 @@
+// Ansible managed
+{ 
+  "CONTAINER_ROOT": "/medifor",
+  "WORKFLOW_HOST": "analytic_workflow",
+  "WORKFLOW_PORT": "50051",
+  "PORT": "3000",
+  "CACHE_TTL_SECONDS": "20",
+  "UI" : {
+    "defaultFuserId": "ta2-combo",
+    "enableGroups": false,
+    "enableDelete": true,
+    "tagPrefixFlag": "__",
+    "userTagPrefix": "user"  },
+  "FACETS" : 
+   [
+      { "name" : "AntiForensics",
+        "description" : "Any techniques that erase processing history of image manipulations"
+      },
+      { "name" : "FaceManipulation",
+        "description" : "Any manipulation done to a face (including GAN)"
+      },
+      { "name" : "GAN",
+        "description" : "Any operations that use GAN-based techniques locally/globally"
+      },
+      { "name" : "Laundering",
+        "description" : "Disguise the original ownership or source of the media via characteristic feature tampering"
+      },
+      { "name" : "Physical",
+        "description" : "Add shadows or sources of reflection that were not originally present"
+      },
+      { "name" : "Recapture",
+        "description" : "Recapture an image through a digital photo of a picture or screen shot"
+      },
+      { "name" : "Reformat",
+        "description" : "Changing the media compression or file format"
+      },
+      { "name" : "SeamCarving",
+        "description" : "Resize an image while preserving the integrity of content"
+      },
+      {
+        "name" :"SemanticAlteration",
+        "description" : "Changing the meaning of media"
+      }
+   ]
+  }
+
+  

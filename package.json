@@ -1,0 +1,93 @@
+{
+  "name": "medifor-demo",
+  "scripts": {
+    "start": "lerna run --stream start",
+    "start-silent": "lerna run start",
+    "debug": "lerna run --stream debug",
+    "bootstrap": "lerna bootstrap",
+    "bootstrap-ci": "lerna bootstrap --ci --scope server -- --production  && lerna bootstrap --ci --scope client ",
+    "lint": "lerna run lint",
+    "clean": "lerna clean -y && lerna run cleanup",
+    "build": "npm run bootstrap-ci && lerna run build && mkdir -p server/public && cp -rp client/dist/* server/public",
+    "docker:start": "cd ./pipeline && docker-compose up --remove-orphans -d && cd ..",
+    "docker:stop": "cd ./pipeline && docker-compose down && cd .."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "echo $HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "server/**/*.{js,scss}": [
+      "lerna run lint --scope=server --",
+      "git add"
+    ],
+    "client/**/*.{vue}": [
+      "lerna run lint --scope=client --",
+      "git add"
+    ]
+  },
+  "release": {
+    "branches": [
+      "master",
+      {
+        "name": "develop",
+        "channel": "rc",
+        "prerelease": "rc"
+      }
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES"
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          },
+          "writerOpts": {
+            "commitsSort": [
+              "subject",
+              "scope"
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "echo ${nextRelease.version} > version.txt"
+        }
+      ],
+      [
+        "@semantic-release/gitlab",
+        {}
+      ]
+    ]
+  },
+  "devDependencies": {
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/gitlab": "^6.0.4",
+    "conventional-changelog-conventionalcommits": "^4.3.0",
+    "husky": "^3.1.0",
+    "lerna": "^3.22.1",
+    "lint-staged": "^9.5.0",
+    "semantic-release": "^17.1.1"
+  }
+}

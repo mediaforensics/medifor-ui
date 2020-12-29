@@ -1,0 +1,48 @@
+#jinja2: lstrip_blocks: "true", trim_blocks: "true"
+{ 
+  "analytics": [
+  {% for type in containers %}
+    {% if additional_containers is defined and additional_containers[type] is defined %}
+      {% set containers_in_type = containers[type] + additional_containers[type] %}
+    {% else %}
+      {% set containers_in_type = containers[type] %}
+    {% endif %}
+    {% if not include_gt %}
+      {% set containers_in_type = containers_in_type | rejectattr('id', 'equalto', 'groundtruth') | list %}
+    {% endif %}
+    {% for container in containers_in_type %}
+    {% if not type == "fusion" %}
+        {% if container.update({'media': [ type | upper ] }) %} {% endif %}
+      {% else %}
+        {% set formatted_list = [] %}
+        {% set handles_list = container.handles %}
+        {% for media_type in handles_list %}
+          {% set media_type = "FUSION_" + media_type | upper %}
+          {% set formatted_list = formatted_list.append(media_type) %}
+        {% endfor %}
+        {% if container.update({'media': formatted_list}) %} {% endif %}
+      {% endif %}
+      {% if container.handles is defined %}
+        {% set pop_val = container.pop("handles") %}
+      {% endif %}
+      {% if container.gpu_num is defined %}
+        {% set pop_val = container.pop("gpu_num") %}
+      {% endif %}
+      {% set pop_val = container.pop("container") %}
+    {{ container | to_nice_json(indent=2) | indent(4) }}
+    {%- if not loop.last -%}
+    ,
+    {% endif %}
+    {% endfor %}
+    {%- if not loop.last -%}
+    ,
+    {% endif %}
+  {% endfor %}
+
+  ]
+}
+
+
+
+
+

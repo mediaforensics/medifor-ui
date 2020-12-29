@@ -1,0 +1,46 @@
+additional_containers:
+  image:
+    # uses gpu
+    - id: umd-ganfingerprint
+      name: GAN versus Authentic Face Classification
+      description: UMD - An algorithm that scores a face image on whether it is a real face or GAN generated.
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/bchen2_s_umd__ganfingerprint:2019-05-22T03-46-15f132000
+      gpu_num: 0
+    # uses gpu
+    - id: uscisi-gan-cnn
+      name: CNN-based GAN Detector with augmentation
+      description: USCISI - CNN-based GAN Detector with augmentation
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/uscisi__ta11_s_gan__detector_s_cnn:2019-09-13T00-48-08f492537
+      gpu_num: 0
+    # uses gpu
+    - id: kitware-holistic-image-v19
+      name: Holistic Image
+      description: Kitware - Holistic detector for generic image manipulations, version 2019
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_reflection-authentication_s_holistic19:2019-06-29T01-41-44f172000
+      gpu_num: 0
+    - id: kw-berkeley-facial-expression
+      name: Facial Expression Manipulation
+      description: Kitware Berkeley - This is a method for detecting facial warps to the parts of a face created by Adobe Photoshop.
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_kitware-berkeley__facial-expression:2019-08-02T23-19-33f641000
+      gpu_num: 0
+    - id: kw-berkeley-cnn-detector-via-progan
+      name: CNN Detector Via ProGAN
+      description: Kitware Berkeley - Detector of CNN-generated imagery, trained on a ProGAN
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_kitware-berkeley__cnn-detector-via-progan:prod2020-03
+      gpu_num: 0
+  video:
+    - id: kw-ualbany-deepfake-facewarp
+      name: DeepFake FaceWarp
+      description: Kitware UAlbany - Detect DeepFake images by comparing the generated face areas and their surrounding regions with a dedicated CNN model.
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_ualbany-face-warp-artifact_s_face-warp:2019-04-09T13-43-07f676000
+      gpu_num: 2
+    - id: kitware-holistic-video
+      name: Holistic Video
+      description: Kitware Holistic Video Detector
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_reflection-authentication_s_release_s_video20:2020-01-21T19-34-36f163000
+      gpu_num: 3
+    - id: luisa
+      name: CNN-based Video Face Forgery Detector
+      description: USCISI Ta11 -Luisa Deepfake face description
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/uscisi__ta11_s_face__cnn__video_s_deepfake__gpu:2019-07-30T09-42-27f495000
+      gpu_num: 1
