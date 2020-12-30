@@ -31,116 +31,13 @@ containers:
       name: Error Level Analysis
       description: Identifying areas within an image that are at different compression levels
       container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_ela-base:2019-11-14T17-17-26f378000
-    - id: umd-gsrnet
-      name: Pixel-based Tampering
-      description: UMD - A network trained to score tampered/authentic pixels in an image
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/bchen2_s_umd__gsrnet:2019-10-04T17-29-34f427000
-    - id: uscisi-gan-fingerprint
-      name: Fingerprint-based GAN Detector
-      description: USCISI - Fingerprint-based GAN Detector
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/uscisi__ta11_s_gan__detector_s_fingerprint:2019-09-13T00-43-24f767502
-    - id: groundtruth
-      name: Ground Truth
-      description: NIST - Ground Truth from the NIST eval datasets
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/medifor_s_medifor-proto-python-starter:2019-10-16T22-50-42f256000
-    - id: kw-dartmouth-jpeg-dimples
-      name: JPEG Dimples
-      description: Kitware Dartmouth - Find local manipulations like splicing, object removal etc. that disrupts the periodicity of the dimple artifact due to JPEG encoding.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_kitware-dartmouth__jpeg-dimple-detection__py:2020-01-21T22-56-53f813000
-    - id: kw-ualbany_deepfake-faceorientation
-      name: DeepFake Face Orientation
-      description: Kitware UAlbany - An approach to expose DeepFake facial images by analyzing the signature in face orientation estimation.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_ualbany-headpose-forensic:2019-03-01T16-04-46f832000
-    - id: kw-ualbany-globalcontrast-vgg
-      name: Global Contrast VGGNet
-      description: Kitware UAlbany - Detects global contrast enhancement by applying a CNN to a global image histogram.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_kitware-ualbany__histogram-cnn_s_vggnet:2019-06-05T18-41-00f285000
-    - id: purdue-polimi-qmatrix
-      name: Same-quantization matrix detector
-      description: Purdue Polimi - This container detects whether an image has undergone a double JPEG compression with a different quantization matrix with respect to the one used to compress it the first time.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/pbestagini_s_api-migration-purdue-polimi__qmatrix:2019-05-02T16-05-46f232000
-    - id: purdue-ta11b-mfcn-6-2019validation
-      name: Splicing Localizer - MFCN
-      description: Purdue Ta11b - This container utilizes a multi-task fully convolutional network (MFCN) for localization of image splicing attacks.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/ckuo_s_purdue__ta11b__mfcn__6__2019validation:2019-01-14T03-23-26f028000
-    - id: splicebuster-face
-      name: Face Forgery Detector based on Splicebuster
-      description: USCISI Ta11 - Face Forgery Detector based on Splicebuster
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/uscisi__ta11_s_sb__face:2019-03-09T12-59-24f883000
-    - id: umd-weather
-      name: Scores image meta-data based on weather dataset
-      description: UMD - An algorithm that uses multi-task learning framework to predict meteorological information from an image and use it to detect discrepancy between metadata and visual content.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/bchen2_s_umd__weather:2019-03-09T06-42-24f542000
-    # memory
-    - id: uscisi-colorbased
-      name: Color Consistency Splicing Detector
-      description: An algorithm for splicing detection based on the camera color representation, which is a function of scene colors and camera-internal color processing.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/bhadwiger_s_uscisi__colorbased:2019-07-11T16-23-46f546000
-    - id: unifi-cropTree
-      name: Metadata-Based Cropping Detector
-      description: Unifi - Cropped images are exposed by exploiting image metadata and by comparing them with known pristine image dimensions and aspect ratios. The algorithm has a tree-based structure
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/unifi-fence_s_unifi__crop__tree__protobuf:2018-12-21T11-53-02f286000
-    - id: unifi-mod3
-      name: Light-Based Face Splicing Detector
-      description: Unifi - Light inconsistencies among human faces are exposed. Two or more detectable human faces are required.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/unifi-fence_s_unifi__mod3__protobuf:2019-01-15T10-15-45f594000
-    - id: c-mayachitra-steg-hollistic-hv-grpc-ver-2
-      name: Holistic Pixel Co-occurrences Anomaly Detection
-      description: Mayachitra - Detect if an image is tampered or not using deviations in pixel level co-occurrences.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/mayachitra-ta1-service_s_c-mayachitra-steg-hollistic-hv-grpc-ver-2:2019-11-06T01-37-56f073000
-    - id: c-mayachitra-gan-detector-ver-1
-      name: Statistical GAN Detector
-      description: Mayachitra - CPU-based analytic for detecting GAN manipulations to images
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/mayachitra-ta1-service_s_c-mayachitra-gan-detector-ver-1:2020-07-12T20-28-31f873000
-    #  container: gitlab-registry.mediforprogram.com/medifor/program-registry/mayachitra-ta1-service_s_c-mayachitra-gan-detector-ver-1:2020-07-12T20-28-31f873000
-    #- id: fibber-gandetection-saturation
-    #  name: GAN Detection Via Saturation Cues
-    #  description: Honeywell-Fibber - Determines if an image was generated by a Generative Adversarial Network (GAN), using saturation cues
-    #  container: gitlab-registry.mediforprogram.com/medifor/program-registry/smccloskey_s_fibber-gandetection-saturation:2020-01-22T00-23-33f581000
-  video:
-    - id: unifi-ed209
-      name: Structure-Based Integrity Verification
-      description: Unifi - Video integrity is assessed based on a dataset of reference video containers. When possible, the most plausible video origin is also produced.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/unifi-fence_s_unifi__ed209:2019-09-04T10-59-29f055000
-    - id: kw-ualbany-ucb_bispectrum-audio
-      name: Bispectrum Voice Analysis
-      description: Kitware UAlbany - Detect if a voice source is a human, Amazon Alexa, Apple, Baidu, or Wavenet. Uses bispectrum analysis of audio files.
-      container: gitlab-registry.mediforprogram.com/kitware/ualbany-ucb_bispectrum-audio:latest
-    - id: kw-ualbany-deepfake-faceorientation-video
-      name: DeepFake Orientation Video
-      description: Kitware UAlbany - An approach to expose DeepFake facial videos by analyzing the signature in face orientation estimation.
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/kitware_s_ualbany-headpose-forensic:2019-03-22T23-14-13f299000
-    - id: luisa
-      name: CNN-based Video Face Forgery Detector
-      description: USCISI Ta11 -Luisa Deepfake face description
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/uscisi__ta11_s_face__cnn__video:2019-09-12T17-27-14f027164
-    - id: groundtruth
-      name: Ground Truth
-      description: NIST - Ground Truth from the NIST eval datasets
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/medifor_s_medifor-proto-python-starter:2019-10-16T22-50-42f256000
+    - id: exif
+      name: Baseline Analytic Exif
+      description: Retrive Exif Data
+      container: gitlab-registry.mediforprogram.com/medifor/program-registry/medifor_s_baseline-analytic-exif:prod2020-03
   fusion:
-    - id: ta2-combo
-      name: Boosted Manipulation Detection
-      description: Identifies manipulated media (both images and videos) trained on demo VIP image analytic list boosting the most accurate scores based on the varying patterns of the analytics results
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-16T16-44-24f533000
-      handles: ["image", "video"]
     - id: ta2avg
       name: Image Averaging Fusion
       description: Averages all analytic input scores available to calculate score
       container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-12T19-54-07f733000
-      handles: ["image"]
-    - id: tauo
-      name: Overall Image Fusion
-      description: University of Oregon boosted fusion. Trained on full analytic list
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/uo_s_fusion:2019-06-24T21-16-58f105000
-      handles: ["image"]
-    - id: gan
-      name: GAN Fusion
-      description: Identifies GAN images based on fused GAN specific analytic results
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-12T19-54-42f909000
-      handles: ["image"]
-    - id: multi
-      name: Manipulation Type Estimator
-      description: Fusion trained to predict multiple classes based on high level manipulation types
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-16T16-43-51f527000
       handles: ["image"]

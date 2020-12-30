@@ -2,7 +2,7 @@
 
 The Medifor UI is a user interface for the [DARPA MediFor](https://www.darpa.mil/program/media-forensics) program. The Medifor UI is designed to run as a standalone microservice in the [Medifor System](https://gitlab.mediforprogram.com/medifor/medifor-how-to).
 
-We highly recommend reading about the [Medifor System](https://gitlab.mediforprogram.com/medifor/medifor-how-to) to get an overview of the UI's role.
+We highly recommend reading about the [Medifor System](./docs/howto.md) to get an overview of the UI's role.
 
 ## Features
 
