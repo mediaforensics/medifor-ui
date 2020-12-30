@@ -22,37 +22,28 @@ The MediFor system uses a collection of microservices to perform video and image
 
 Additionally, shared storage is mounted into these microservices to save uploads, accessory files and other data.
 
-```mermaid
 graph LR
-
-    subgraph DB
-        A[(Postgres)]
-    end
-    subgraph Shared Storage
-        B[(Mounted Directory)]
-    end
-
-    C[MediforUI]-->D(Analytic Workflow)
-
-    A --> B
-    E --> A
-
-
-    C --> B
-    D --> A
-    D --> E{EntroQ}
-    E --> F(Analytic Worker)
-    E --> G(Analytic Worker)
-    E --> H(Fusion Worker)
-    F --> I[Analytic One]
-    G --> J[Analytic Two]
-    H --> K[Fusion One]
-
-
-    I --> B
-    J --> B
-    K --> B
-```
+subgraph DB
+A[(Postgres)]
+end
+subgraph Shared Storage
+B[(Mounted Directory)]
+end
+C[MediforUI]-->D(Analytic Workflow)
+A --> B
+E --> A
+C --> B
+D --> A
+D --> E{EntroQ}
+E --> F(Analytic Worker)
+E --> G(Analytic Worker)
+E --> H(Fusion Worker)
+F --> I[Analytic One]
+G --> J[Analytic Two]
+H --> K[Fusion One]
+I --> B
+J --> B
+K --> B
 
 _NOTE: The figure above is a 'model' of the system, its important to note that much of the data flow is bi-directional_
 
