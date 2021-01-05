@@ -12,6 +12,14 @@
     "docker:start": "cd ./pipeline && docker-compose up --remove-orphans -d && cd ..",
     "docker:stop": "cd ./pipeline && docker-compose down && cd .."
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mediaforensics/medifor-ui.git"
+  },
+  "contributors": [
+    "Wes Dingman <wesley.dingman@caci.com>",
+    "Edgardo Vega <edgardo.vega@caci.com"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",

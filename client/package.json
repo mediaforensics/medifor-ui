@@ -49,6 +49,6 @@
     "eslint-plugin-vue": "^5.2.2",
     "vue-template-compiler": "^2.5.21"
   },
-  "repository": "https://gitlab.mediforprogram.com/medifor/medifor-demo-ui",
+  "repository": "https://github.com/mediaforensics/medifor-ui.git",
   "license": "Apache-2.0"
 }
