@@ -16,7 +16,7 @@
     "tagPrefixFlag": "{{medifor_ui_tagPrefixFlag}}",
     "userTagPrefix": "{{medifor_ui_userTagPrefix}}"
     {%- if medifor_ui_enableGroups %},
-    "unknownUsers":"{{ medifor_ui_unknownUsers }}", // Indicates how to handle unknown users ( "deny" | "allow")
+    "unknownUsers":"{{ medifor_ui_unknownUsers }}", 
     "groupPrefix": "{{ medifor_ui_groupPrefix }}",
     "groupTagPrefix": "{{ medifor_ui_groupTagPrefix }}"
     {% endif %}

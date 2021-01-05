@@ -1,16 +1,16 @@
 ansible_become: yes
 
-medifor_dir: /opt/medifor
-config_file_dir: /opt/medifor
-medifor_ui_docker_tag: develop
-analytic_worker_tag: develop
-medifor_demo_data_dir: /medifor_demo_data
-container_data_dir: /medifor_demo_data
+medifor_dir: ../server/config
+config_file_dir: ../pipeline/config
+medifor_ui_docker_tag: latest
+analytic_worker_tag: latest
+medifor_demo_data_dir: /tmp/analyticsui
+container_data_dir: /medifor
 medifor_backup_dir: /medifor_backup
 workflow_host: "analytic_workflow"
 workflow_port: "50051"
 medifor_ui_port: 3000
-medifor_defaultFuserId: "ta2-combo"
+medifor_defaultFuserId: "ta2avg"
 env: "production"
 
 include_ui: true
@@ -30,14 +30,14 @@ containers:
     - id: ela
       name: Error Level Analysis
       description: Identifying areas within an image that are at different compression levels
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_ela-base:2019-11-14T17-17-26f378000
+      container: docker.pkg.github.com/mediaforensics/packages/ela:latest
     - id: exif
       name: Baseline Analytic Exif
       description: Retrive Exif Data
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/medifor_s_baseline-analytic-exif:prod2020-03
+      container: docker.pkg.github.com/mediaforensics/packages/exif:latest
   fusion:
     - id: ta2avg
       name: Image Averaging Fusion
       description: Averages all analytic input scores available to calculate score
-      container: gitlab-registry.mediforprogram.com/medifor/program-registry/nextcentury_s_fusion-container:2019-12-12T19-54-07f733000
+      container: docker.pkg.github.com/mediaforensics/packages/ta2avg:latest
       handles: ["image"]

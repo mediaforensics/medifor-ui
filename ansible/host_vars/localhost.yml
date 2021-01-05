@@ -1,7 +1,3 @@
-medifor_demo_data_dir: /tmp/analyticsui
-config_file_dir: ../pipeline/config
-medifor_dir: ../server/config
-container_data_dir: /medifor
 include_ui: false
 include_gt: false
 env: "development"
