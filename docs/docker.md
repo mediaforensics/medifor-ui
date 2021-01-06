@@ -34,7 +34,7 @@ The order of precedence using configJs is:
 - development.json/production.json
 - default.json
 
-This means that configJs will first see if the enviroment variable exists, if not then it will look in either development.json or production.json, lastly it will check default.json.
+This means that configJs will first check if the enviroment variable exists, if not then it will look in either development.json or production.json, lastly it will check default.json.
 
 ## Running the UI as a Container
 
@@ -44,7 +44,7 @@ Lets look at how this works:
 
 ```yaml
 medifor_ui:
-  image: "gitlab-registry.mediforprogram.com/medifor/medifor-demo-ui:develop" # Prebuilt Docker Image of the Medifor UI
+  image: "docker.pkg.github.com/mediaforensics/packages/medifor-ui:latest" # Prebuilt Docker Image of the Medifor UI
   restart: always
   networks:
     - mfnet # Docker Compose Network being created
@@ -68,9 +68,9 @@ $ docker-compose -f "docker-compose-full.yml" up -d
 
 The UI will now be available at `localhost:3000` in your browser.
 
-## Building the Container
+## Building the Image
 
-This repo's CI pipeline manages building the container and storing it on Gitlab's Container registry. If you would like to build it locally then you can use the `dockerBuild.sh` script in the root of this project.
+Use the provided _Dockerfile_ in the root of the repository to build a new image.
 
 ## FAQ
 
@@ -82,7 +82,7 @@ Yes, you can even do both but remember that environment variables take precedenc
 
 When the UI is running from source, if it does not see the value it needs in the environment variables it will look in development.json, conversely if the UI is running from a Docker container and it does not see the value it needs in the environment variables it will look in production.json. When the UI is running in a container, NODE_ENV will be set to `production` and configJs will recognize this behind the scenes and look for values accordingly. Long story short, if you are mounting a config file into the container, make sure you mount it as `production.json`.
 
-#### Why is the config file being mounted into /usr/src/app/production.json?
+#### Why is the config file being mounted into /usr/src/app/config/production.json?
 
 `/usr/src/app/` is where the UI application actually lives when inside a container. You can see our [Dockerfile](../Dockerfile) for how we have this set up.
 

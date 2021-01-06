@@ -6,7 +6,7 @@
   "PORT": "3000",
   "CACHE_TTL_SECONDS": "20",
   "UI" : {
-    "defaultFuserId": "ta2-combo",
+    "defaultFuserId": "ta2avg",
     "enableGroups": false,
     "enableDelete": true,
     "tagPrefixFlag": "__",
