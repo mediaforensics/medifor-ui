@@ -1,15 +1,11 @@
 # Ansible
 
-This repo leverages ansible to mananage deployments and configurations. Use of this tool is option but this repo is designed with it in mind so it is recommended.
+This repo leverages ansible to mananage local configuration. Use of this tool is option but this repo is designed with it in mind so it is recommended.
 
 We also recommonded taking a look at the [official docs](https://github.com/ansible/ansible/tree/devel/docs/docsite).
 
 ## How its Used
 
-There are three main scripts that are used to manage local and remote configuration:
-
-- `ansible/setup.yml` - This will install accessory software and add public keys to a remote instance intended to run the Medifor System
-- `ansible/deploy.yml` - This will deploy the Medifor System to the remote instance. This works by generating all configuration files and a _docker-compose_ file based off the analytic containers defined in group and host variables then copying those file to the remote instance.
 - `ansible/dev.yml` - This will generate all the necessary configuration files to deploy the system locally
 
 ## Templates being Used
@@ -23,8 +19,6 @@ There are three main scripts that are used to manage local and remote configurat
 - `ansible/templates/watchdog.py` - Python script that will watch _docker-compose_ commands for exiting containers and will automatically restart them
 
 ## How it Works
-
-We'll use the case of local development for an example.
 
 ```bash
 $ cd ansible
