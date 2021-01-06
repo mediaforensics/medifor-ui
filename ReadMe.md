@@ -1,8 +1,8 @@
 # Medifor User Interface
 
-The Medifor UI is a user interface for the [DARPA MediFor](https://www.darpa.mil/program/media-forensics) program. The Medifor UI is designed to run as a standalone microservice in the [Medifor System](./docs/howto.md).
+The Medifor UI is a user interface for the [DARPA MediFor](https://www.darpa.mil/program/media-forensics) program. The Medifor UI is designed to run as a standalone microservice within the Medifor System.
 
-We highly recommend reading about the [Medifor System](./docs/howto.md) before working with the user interface.
+This repo provides the source code for the user interface and instructions to stand up the Medifor System locally.
 
 ## Features
 
@@ -20,7 +20,7 @@ We highly recommend reading about the [Medifor System](./docs/howto.md) before w
 
 ## Overview
 
-This repository has several distinct components: a Javascript based monorepo for client and server code, an Ansible repo for managing configuration files and deployments, and _docker-compose_ files for locally deploying the Medifor System.
+The code base has several distinct components: a Javascript based monorepo for client and server code, an Ansible repo for managing configuration files, and _docker-compose_ files for locally deploying the Medifor System.
 
 Please visit the following links for information on how to:
 
