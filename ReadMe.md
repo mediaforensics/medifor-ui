@@ -4,6 +4,8 @@ The Medifor UI is a user interface for the [DARPA MediFor](https://www.darpa.mil
 
 This repo provides the source code for the user interface and instructions to stand up the Medifor System locally.
 
+Please see the [Medifor-How-To](./docs/howto.md) to get an overview of how the Medifor System works.
+
 ## Features
 
 - Web-based user interface
