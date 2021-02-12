@@ -32,7 +32,7 @@ The [MediforUI](https://gitlab.mediforprogram.com/medifor/medifor-demo-ui) is th
 
 The project is organized as a mono-repo with a Vue frontend and Node backend. It follows a traditional single-page application architecure and its primary responsibility is communicating via gRPC with the `Analytic Workflow` microservice.
 
-It is important to recognize that the project leverages ansible to generate configuration and deployment files for both the devolopment and production environments. These deployments are handled via _docker-compose_ which is NOT the recommended deployment method for a production environment.
+It is important to recognize that the project leverages ansible to generate configuration and deployment files for both the devolopment and production environments. These deployments are handled via _docker-compose_ which is NOT the recommended deployment method for a production environment, but should be sufficient for testing purposes.
 
 Lastly, the service utilizes [configJs](https://www.npmjs.com/package/config) to handle development/production deployment files as well as ENV variables. It is recommended to familiarize yourself with this tool, it will help immensely during deployment.
 
