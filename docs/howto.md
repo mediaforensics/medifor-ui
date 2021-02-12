@@ -23,12 +23,11 @@ The MediFor system uses a collection of microservices to perform video and image
 Additionally, shared storage is mounted into these microservices to save uploads, accessory files and other data.
 
 ![Graph](./images/graph.png "Graph")
-
 _NOTE: The figure above is a 'model' of the system, it's important to note that much of the data flow is bi-directional_
 
 ### MediforUI
 
-The [MediforUI](https://gitlab.mediforprogram.com/medifor/medifor-demo-ui) is the user interface for the MediFor system which communicates with the [Medifor Analytic Service](https://gitlab.mediforprogram.com/medifor/analytic-worker).
+The [MediforUI](https:///github.com/mediaforensics/medifor-ui) is the user interface for the MediFor system which communicates with the [Medifor Analytic Service](https:///github.com/mediaforensics/medifor).
 
 The project is organized as a mono-repo with a Vue frontend and Node backend. It follows a traditional single-page application architecure and its primary responsibility is communicating via gRPC with the `Analytic Workflow` microservice.
 
@@ -38,7 +37,7 @@ Lastly, the service utilizes [configJs](https://www.npmjs.com/package/config) to
 
 ### Analytic Service (Workflow/Worker)
 
-The [Medifor Analytic Service](https://gitlab.mediforprogram.com/medifor/analytic-worker) is a gRPC-based API that contains services for the Analytic Worker tasks, Fusion Worker tasks and the Analytic Workflow management service.
+The [Medifor Analytic Service](https:///github.com/mediaforensics/medifor) is a gRPC-based API that contains services for the Analytic Worker tasks, Fusion Worker tasks and the Analytic Workflow management service.
 
 The repository has several distinct pieces:
 
@@ -64,7 +63,7 @@ Please see the `Using the pipeclient` section of the README if you would rather 
 
 The MediFor system uses a variety of analytics which aim to detect manipulation on uploaded media (images/video). The MediFor program works with academics and others, who develop these analytics, to integrate their research into the Medifor system.
 
-By using the MediFor protobufs and gRPC wrapper, the analytics can be integrated into the system. If you are interested in developing your own analytic for the MediFor system please look at the [Medifor Proto Python Starter](https://gitlab.mediforprogram.com/medifor/medifor-proto-python-starter) repository.
+By using the MediFor protobufs and gRPC wrapper, the analytics can be integrated into the system. If you are interested in developing your own analytic for the MediFor system please look at the [Medifor Proto Python Starter](https:///github.com/mediaforensics/medifor) repository.
 
 ### Postgres
 
@@ -72,7 +71,7 @@ Postgres provides backend storage for analytic results. The data in Postgres is 
 
 ### Autoscaler
 
-Not pictured in the diagram, the [autoscaler](https://gitlab.mediforprogram.com/medifor/autoscaler) manages the spinning up/down of analytic pods. It is not necessary to run the system but is recommended to be used in k8s deployments when GPU based analytics are running. Since GPUs can only be wholly allocated to a single analytic at one time the autoscaler will shut down analytic pods that are waiting to use the GPU.
+Not pictured in the diagram, the [autoscaler](https://github.com/mediaforensics/packages/packages/613403) manages the spinning up/down of analytic pods. It is not necessary to run the system but is recommended to be used in k8s deployments when GPU based analytics are running. Since GPUs can only be wholly allocated to a single analytic at one time the autoscaler will shut down analytic pods that are waiting to use the GPU.
 
 ## Deploying The System
 
@@ -80,25 +79,13 @@ Since these microservices are created as Docker Images it is recommended that th
 
 Its important to note that these repositories use Minikube as an example cluster set up, it is the user's responsibilty if they wish to extend to a multi-node cluster configuration.
 
-### Kubernetes Manual Deployment
-
-This [repository](https://gitlab.mediforprogram.com/medifor/k8s-deployments) will walk you through manually installing the system with minikube as an example cluster environment.
-
-This is probably the most user intensive setup but it provides a great deal of granularity and troubleshooting information.
-
 ### MicroK8s Via Ansible
 
-This [repository](https://gitlab.mediforprogram.com/medifor/microk8s-ansible) will help you to bootstrap a single-node microk8s cluster and deploy the system to it.
-
-To use this method you must have a remote instance available and the recommended OS is Ubuntu.
-
-THIS REPO PROVIDES AUTOMATIC NVIDIA GPU DRIVER INSTALLATION, PLEASE SEE README FOR MORE INFORMATION.
+Coming soon!
 
 ### Medifor Helm Chart
 
-This [repository](https://gitlab.mediforprogram.com/medifor/medifor-helm-chart) provides a helm chart to stand up the medifor system with minikube as an example cluster environment.
-
-The helm chart is an automation of the Kubernetes Manual Deployment and it abstracts away a lot of the details of the deployment. It is recommended to have some helm knowledge when choosing this route.
+Coming soon!
 
 ### Local Deployment
 
@@ -124,7 +111,7 @@ This system was designed to leverage Docker containers as standalone microservic
 
 #### How can I add analytics to my system?
 
-You will need access to the [medifor docker registry](https://gitlab.mediforprogram.com/medifor/program-registry/container_registry) to pull images along with access to the [analytic descriptions and requirements](https://mediforprogram.com/wiki/display/MEDIFOR/Analytic+GPU+Requirements+and+Descriptions) page for information about these analytics. All of the deployment repositories (K8s, MicroK8s, Helm Chart) provide further instruction on adding these analytics once you have access.
+You will need access to the medifor docker registry to pull images along with access to the analytic descriptions and requirements page for information about these analytics. All of the deployment repositories (K8s, MicroK8s, Helm Chart) provide further instruction on adding these analytics once you have access.
 
 You may need to email [help@mediforprogam.com](help@mediforprogram.com) to get access to these resources.
 
@@ -133,5 +120,3 @@ You may need to email [help@mediforprogam.com](help@mediforprogram.com) to get a
 You will need to add a "fusion analytic" to your system. These are a special type of analytic that provide a composite score for an upload based on the scores from the standard analytics in the system. The process is similar to adding standard analytics.
 
 All of the deployment repos will have a default fusion analytic.
-
-It is highly recommended to take a look at the [fusion-pipeline](https://gitlab.mediforprogram.com/medifor/fusion-pipeline/-/tree/develop) for more detailed instructions.
