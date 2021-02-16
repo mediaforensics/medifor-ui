@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Demo to highlight the Medifor program's capabilities",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,10 @@
     "url": "https://github.com/mediaforensics/medifor-ui.git"
   },
   "contributors": [
+    "Wes Dingman <wesley.dingman@caci.com>",
+    "Edgardo Vega <edgardo.vega@caci.com>",
     "Eric Retzloff <eric.retzloff@nextcentury.com>",
-    "William Barteck <william.barteck@nextcentury.com>",
-    "Wes Dingman <wes.dingman@nextcentury.com>"
+    "William Barteck <william.barteck@nextcentury.com>"
   ],
   "license": "Apache-2.0",
   "dependencies": {
@@ -64,5 +65,30 @@
     "eslint-plugin-standard": "^4.0.0",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1"
+  },
+  "prettier": {
+    "trailingComma": "none",
+    "arrowParens": "avoid"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "commonjs": true,
+      "es6": true,
+      "node": true
+    },
+    "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "extends": [
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "prettier/prettier": "error"
+    }
   }
 }
