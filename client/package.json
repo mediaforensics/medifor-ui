@@ -12,6 +12,10 @@
     "minimist": "1.2.3",
     "mkdirp": "0.5.3"
   },
+  "contributors": [
+    "Wes Dingman <wesley.dingman@caci.com>",
+    "Edgardo Vega <edgardo.vega@caci.com"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
@@ -49,6 +53,8 @@
     "eslint-plugin-vue": "^5.2.2",
     "vue-template-compiler": "^2.5.21"
   },
-  "repository": "https://github.com/mediaforensics/medifor-ui.git",
-  "license": "Apache-2.0"
+  "prettier": {
+    "trailingComma": "none",
+    "arrowParens": "avoid"
+  }
 }

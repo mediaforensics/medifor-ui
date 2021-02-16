@@ -9,28 +9,25 @@ const userController = require("../controllers/userController");
 const facetsController = require("../controllers/facetsController");
 const rotateController = require("../controllers/rotateController");
 const configController = require("../controllers/configController");
-
 const { catchErrors } = require("../handlers/errorHandlers");
 
-router.use("/analytics", catchErrors(analyticsController.index));
-router.get("/facets", catchErrors(facetsController.index));
-
 router.get("/probes/:id", catchErrors(probesController.show));
+router.delete("/probes/", catchErrors(probesController.deleteTagged));
+router.delete("/probes/:id", catchErrors(probesController.deleteProbe));
+router.put("/probes/:id/tags", catchErrors(probesController.tags.replace));
+router.patch("/probes/:id/tags", catchErrors(probesController.tags.merge));
+router.delete("/probes/:id/tags", catchErrors(probesController.tags.delete));
 router.get(
   "/probes/",
   probesController.extractSortOptions,
   catchErrors(probesController.index)
 );
-
-router.delete("/probes/:id", catchErrors(probesController.deleteProbe));
-router.delete("/probes/", catchErrors(probesController.deleteTagged));
-
-router.put("/probes/:id/tags", catchErrors(probesController.tags.replace));
-router.patch("/probes/:id/tags", catchErrors(probesController.tags.merge));
-router.delete("/probes/:id/tags", catchErrors(probesController.tags.delete));
-
+router.get("/user", userController.show);
+router.get("/facets", facetsController.index);
+router.get("/config", configController.config);
 router.get("/tags", catchErrors(tagsController.index));
-
+router.get("/rotate", catchErrors(rotateController.rotate));
+router.get("/analytics", catchErrors(analyticsController.index));
 router.post(
   "/upload",
   uploadsController.upload,
@@ -42,7 +39,6 @@ router.post(
   catchErrors(uploadsController.createVideoRequest),
   catchErrors(uploadsController.submitDetection)
 );
-
 router.post(
   "/uploadURL",
   uploadsController.fromURL,
@@ -54,10 +50,5 @@ router.post(
   catchErrors(uploadsController.createVideoRequest),
   catchErrors(uploadsController.submitDetection)
 );
-
-router.get("/user", userController.show);
-router.get("/config", configController.config);
-
-router.get("/rotate", catchErrors(rotateController.rotate));
 
 module.exports = router;

@@ -4,11 +4,11 @@ const express = require("express");
 const routes = require("./routes");
 const bodyParser = require("body-parser");
 const { serializeError } = require("serialize-error");
-const { workingRoot, inboxPath } = require("./helpers/directories");
+const { workingRoot } = require("./helpers/directories");
 
 const app = express();
 
-const expressApp = () => {
+exports.generateExpress = () => {
   app.use(cors());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
@@ -18,6 +18,7 @@ const expressApp = () => {
   app.use("/", express.static(workingRoot));
   app.use("/", routes);
 
+  /* Logging middleware */
   app.use(function(err, req, res, next) {
     console.error(err);
     const error =
@@ -31,5 +32,3 @@ const expressApp = () => {
   });
   return app;
 };
-
-module.exports = expressApp;

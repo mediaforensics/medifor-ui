@@ -16,43 +16,41 @@ const media_type = {
   IMAGE: 0,
   VIDEO: 1,
   FUSION_IMAGE: 2,
-  FUSION_VIDEO: 3,
+  FUSION_VIDEO: 3
 };
 
 const fusersFor = (type, fusers) =>
-  fusers
-    .filter((fuser) => fuser.handles.includes(type))
-    .map((fuser) => fuser.id);
+  fusers.filter(fuser => fuser.handles.includes(type)).map(fuser => fuser.id);
 
 /* Extracts the image & video analytics and formats them correctly */
 const filterAnalytics = (analyticsList, type) => {
   return analyticsList
-    .filter((container) => container.media[0] == type)
-    .map((container) => {
+    .filter(container => container.media[0] == type)
+    .map(container => {
       return {
         id: container.id,
         description: container.description,
-        name: container.name,
+        name: container.name
       };
     });
 };
 
 /* Extracts the fusers and formats them correctly */
-const filterFusers = (analyticsList) => {
+const filterFusers = analyticsList => {
   return analyticsList
     .filter(
-      (container) =>
+      container =>
         container.media.includes(media_type.FUSION_IMAGE) ||
         container.media.includes(media_type.FUSION_VIDEO)
     )
-    .map((container) => {
+    .map(container => {
       return {
         id: container.id,
         description: container.description,
         name: container.name,
-        handles: container.media.map((type) => {
+        handles: container.media.map(type => {
           return type == media_type.FUSION_IMAGE ? "image" : "video";
-        }),
+        })
       };
     });
 };
@@ -75,7 +73,7 @@ const fetchAnalyticsFromPipeline = (analyticsListRequest = {}) => {
               response.analytics,
               media_type.VIDEO
             ),
-            fusers: filterFusers(response.analytics),
+            fusers: filterFusers(response.analytics)
           };
           fetchedAnalyticsList = { ...formattedAnalytics };
           cache.set(CACHE_KEY, fetchedAnalyticsList, CACHE_DURATION);
@@ -85,7 +83,7 @@ const fetchAnalyticsFromPipeline = (analyticsListRequest = {}) => {
     } else {
       resolve(fetchedAnalyticsList);
     }
-  }).catch((error) => {
+  }).catch(error => {
     console.log(
       `Error retrieving analytics metadata from analytic workflow. Check that analytic workflow is running.\nTerminating process. Failed with code ${error} `
     );
@@ -93,7 +91,7 @@ const fetchAnalyticsFromPipeline = (analyticsListRequest = {}) => {
   });
 };
 
-const detect = (request) => {
+const detect = request => {
   return new Promise((resolve, reject) => {
     workflowClient.Detect(request, (err, response) => {
       if (err) reject(err);
@@ -102,35 +100,35 @@ const detect = (request) => {
   });
 };
 
-exports.detectImage = async (detectionRequest) => {
+exports.detectImage = async detectionRequest => {
   const { imageAnalytics, fusers } = await fetchAnalyticsFromPipeline();
-  detectionRequest.analytic_id = imageAnalytics.map((a) => a.id);
+  detectionRequest.analytic_id = imageAnalytics.map(a => a.id);
   detectionRequest.fuser_id = fusersFor("image", fusers);
 
   return detect(detectionRequest)
-    .then((response) => {
+    .then(response => {
       return response;
     })
-    .catch((err) => {
+    .catch(err => {
       throw err;
     });
 };
 
-exports.detectVideo = async (detectionRequest) => {
+exports.detectVideo = async detectionRequest => {
   const { videoAnalytics, fusers } = await fetchAnalyticsFromPipeline();
-  detectionRequest.analytic_id = videoAnalytics.map((a) => a.id);
+  detectionRequest.analytic_id = videoAnalytics.map(a => a.id);
   detectionRequest.fuser_id = fusersFor("video", fusers);
 
   return detect(detectionRequest)
-    .then((response) => {
+    .then(response => {
       return response;
     })
-    .catch((err) => {
+    .catch(err => {
       throw err;
     });
 };
 
-exports.getDetectionInfo = (detectionInfoRequest) => {
+exports.getDetectionInfo = detectionInfoRequest => {
   return new Promise((resolve, reject) => {
     workflowClient.GetDetectionInfo(detectionInfoRequest, (err, response) => {
       if (err) reject(err);
@@ -139,7 +137,7 @@ exports.getDetectionInfo = (detectionInfoRequest) => {
   });
 };
 
-exports.getDetectionList = (detectionListRequest) => {
+exports.getDetectionList = detectionListRequest => {
   return new Promise((resolve, reject) => {
     workflowClient.GetDetectionList(detectionListRequest, (err, response) => {
       if (err) reject(err);
@@ -148,7 +146,7 @@ exports.getDetectionList = (detectionListRequest) => {
   });
 };
 
-exports.deleteDetection = (deleteDetectionRequest) => {
+exports.deleteDetection = deleteDetectionRequest => {
   return new Promise((resolve, reject) => {
     workflowClient.DeleteDetection(deleteDetectionRequest, (err, response) => {
       if (err) reject(err);
@@ -166,7 +164,7 @@ const init = () => {
   const pipelineDefinition = protoLoader.loadSync("pipeline.proto", {
     keepCase: true,
     defaults: true,
-    includeDirs: [protosRoot],
+    includeDirs: [protosRoot]
   });
 
   const workflowProto = grpc.loadPackageDefinition(pipelineDefinition)
