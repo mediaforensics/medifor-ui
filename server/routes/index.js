@@ -12,7 +12,7 @@ const configController = require("../controllers/configController");
 
 const { catchErrors } = require("../handlers/errorHandlers");
 
-router.get("/analytics", catchErrors(analyticsController.index));
+router.use("/analytics", catchErrors(analyticsController.index));
 router.get("/facets", catchErrors(facetsController.index));
 
 router.get("/probes/:id", catchErrors(probesController.show));
