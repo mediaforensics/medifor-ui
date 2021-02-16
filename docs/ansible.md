@@ -1,6 +1,6 @@
 # Ansible
 
-This repo leverages ansible to mananage local configuration. Use of this tool is option but this repo is designed with it in mind so it is recommended.
+This repo leverages ansible to manage local configuration. Use of this tool is option but this repo is designed with it in mind so it is recommended.
 
 We also recommonded taking a look at the [official docs](https://github.com/ansible/ansible/tree/devel/docs/docsite).
 
