@@ -26,7 +26,7 @@ You can pull these container from the Medifor program-registry and spin up the d
 
 ```bash
 $ cd medifor-ui/pipeline
-$ docker login docker.pkq.github.com # Use your github id and access token
+$ docker login docker.pkg.github.com # Use your github id and access token
 $ docker-compose pull # This pulls the Docker images from docker-compose.yml to your local machine
 $ docker-compose up -d # This will create Docker containers for the services defined in docker-compose.yml
 ```
