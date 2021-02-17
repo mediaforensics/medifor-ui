@@ -75,9 +75,19 @@ export {
   interpolateGradient
 };
 
-export const greyscale = [[0, 0, 0], [255, 255, 255]];
-export const invertedgreyscale = [[255, 255, 255], [0, 0, 0]];
-export const cividis = [[255, 234, 70], [135, 132, 121], [0, 32, 77]];
+export const greyscale = [
+  [0, 0, 0],
+  [255, 255, 255]
+];
+export const invertedgreyscale = [
+  [255, 255, 255],
+  [0, 0, 0]
+];
+export const cividis = [
+  [255, 234, 70],
+  [135, 132, 121],
+  [0, 32, 77]
+];
 export const viridis = [
   [68, 1, 84],
   [72, 36, 117],

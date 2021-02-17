@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --skip-plugins @vue/cli-plugin-eslint",
     "lint": "vue-cli-service lint",
     "cleanup": "rm -rf dist",
     "preinstall": "npx npm-force-resolutions"

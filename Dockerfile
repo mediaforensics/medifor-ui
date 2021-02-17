@@ -27,7 +27,7 @@ RUN cd tmp \
     && rm -rf tmp
 
 LABEL vendor="medifor" \
-    name="medifor-demo-ui" \
+    name="medifor-ui" \
     build-date=$BUILD_DATE \
     vcs-ref=$COMMIT \
     version=$VERSION \
