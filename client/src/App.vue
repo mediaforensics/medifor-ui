@@ -5,12 +5,7 @@
       <aside class="column is-narrow">
         <Sidebar />
       </aside>
-      <!-- Main Display -->
-
-      <!-- import modal for url uploads -->
-      <!-- v-if="$store.getters['selectedMenu'] === 'Import'" -->
       <ImportModal />
-
       <div
         class="column gallery-container"
         :class="{ 'is-narrow': probe !== null }"
@@ -18,23 +13,21 @@
         ref="gallerycontainer"
         :style="galleryStyle"
       >
+        <!-- Gallery Route -->
         <router-view name="gallery" />
       </div>
-
       <div
         @mousedown.prevent="startMove($event)"
         ref="slider"
         class="column is-narrow is-slider"
         v-if="selectedMenu !== 'Upload' && probe !== null"
       ></div>
-      <!-- Probeview route -->
+      <!-- Probeview Route -->
       <div class="column" v-if="selectedMenu !== 'Upload' && probe !== null">
         <router-view name="probe" />
       </div>
       <!-- Upload Route -->
       <router-view class="column is-full-width" name="upload" />
-
-      <!-- TODO full page image view -->
     </div>
   </div>
 </template>
