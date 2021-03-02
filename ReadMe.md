@@ -6,6 +6,8 @@ This repo provides the source code for the user interface and instructions to st
 
 Please see the [Medifor-How-To](./docs/howto.md) to get an overview of how the Medifor System works.
 
+Additionally, you can view our press release [here](https://www.datamachines.io/blog/medifor-code-premiere-what-you-need-to-know) for a high level overview.
+
 ## Features
 
 - Web-based user interface
