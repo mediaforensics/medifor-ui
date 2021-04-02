@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "vue-cli-service serve",
-    "build": "vue-cli-service build --skip-plugins @vue/cli-plugin-eslint",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "cleanup": "rm -rf dist",
     "preinstall": "npx npm-force-resolutions"
@@ -20,7 +20,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/vue-fontawesome": "^0.1.6",
-    "axios": "^0.21.1",
+    "axios": "^0.19.0",
     "bulma": "^0.8.0",
     "bulma-toast": "^1.5.1",
     "file-saver": "^2.0.2",
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
-    "@vue/cli-service": "^4.5.11",
+    "@vue/cli-service": "^3.8.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.1.0",
@@ -54,7 +54,7 @@
     "vue-template-compiler": "^2.5.21"
   },
   "prettier": {
-    "trailingComma": "none",
-    "arrowParens": "avoid"
-  }
+    "trailingComma": "none"
+  },
+  "license": "Apache-2.0"
 }

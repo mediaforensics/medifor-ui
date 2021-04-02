@@ -1,8 +1,9 @@
 import get from "lodash.get";
+import path from "path";
 
 import { getBaseUrl } from "@/helpers/urlBuilder";
 
-const sourceDir = "/input/";
+const sourceDir = "input";
 
 const fileType = {
   IMAGE: 0,
@@ -69,20 +70,20 @@ export const probeParserMixin = {
   },
   methods: {
     imageUrl(uri) {
-      const { start, workingURL } = this.urlHelper(uri);
-      const path = `.${sourceDir}${uri.substring(start)}`;
+      const { file, workingURL } = this.urlHelper(uri);
+      const relativePath = path.join(sourceDir, file);
 
-      const { href } = new URL(path, workingURL);
+      const { href } = new URL(relativePath, workingURL);
       return href;
     },
 
     videoUrl(uri, options = {}) {
-      const { start, workingURL } = this.urlHelper(uri);
-      const path = options.original
-        ? `${sourceDir}${uri.substring(start)}`
-        : `${sourceDir}transcoded/${uri.substring(start)}`;
+      const { file, workingURL } = this.urlHelper(uri);
+      const relativePath = options.original
+        ? path.join(sourceDir, file)
+        : path.join(sourceDir, "transcoded", file);
 
-      const { href } = new URL(path, workingURL);
+      const { href } = new URL(relativePath, workingURL);
 
       return options.original
         ? href
@@ -90,10 +91,10 @@ export const probeParserMixin = {
     },
 
     thumbnailUrl(uri, type) {
-      const { start, workingURL } = this.urlHelper(uri);
-      const path = `.${sourceDir}thumbnails/${uri.substring(start)}`;
+      const { file, workingURL } = this.urlHelper(uri);
+      const relativePath = path.join(sourceDir, "thumbnails", file);
 
-      const { href } = new URL(path, workingURL);
+      const { href } = new URL(relativePath, workingURL);
       const ext = href.split(".").pop();
 
       /* All audio an video files generate an mp4 moving thumbnail */
@@ -101,10 +102,13 @@ export const probeParserMixin = {
     },
 
     urlHelper(uri) {
-      const startIndex = uri.indexOf(sourceDir) + sourceDir.length;
+      /* Seperate uri at slashes (Windows or POSIX) and get filename from last index */
+      const sep = uri.includes("/") ? "/" : "\\";
+      const uriSeperated = uri.split(sep);
+      const [fileName] = uriSeperated.slice(-1);
 
       return {
-        start: startIndex,
+        file: fileName,
         workingURL: getBaseUrl()
       };
     },
