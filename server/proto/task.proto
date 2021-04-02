@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package workflowproto;
+package mediforproto;
 
-option go_package = "gitlab.mediforprogram.com/medifor/analytic-worker/pkg/workflowproto";
+option go_package = "github.com/mediaforensics/medifor/pkg/mediforproto";
 
-import "analytic.proto"; // -I gitlab.mediforprogram.com/medifor/medifor-proto/proto
-import "fusion.proto"; // -I gitlab.mediforprogram.com/medifor/medifor-proto/proto
+import "medifor/v1/analytic.proto"; // -I gitlab.mediforprogram.com/medifor/medifor-proto/proto
+import "medifor/v1/fusion.proto"; // -I gitlab.mediforprogram.com/medifor/medifor-proto/proto
 
 
 // DetectionTask contains a Detection (partial - holding only the

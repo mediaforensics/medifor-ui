@@ -31,7 +31,7 @@ services:
       - mfnet
 
   analytic_workflow:
-    image: "docker.pkg.github.com/mediaforensics/packages/analyticworker:latest"
+    image: medifor:2021-04-02
     restart: always
     command:
       - "analyticworkflow"
@@ -60,7 +60,7 @@ services:
       - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
       - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
   aw_ela:
-    image: "docker.pkg.github.com/mediaforensics/packages/analyticworker:${ANALYTIC_WORKER_TAG}"
+    image: medifor:2021-04-02
     restart: always
     command:
       - "analyticworker"
@@ -78,7 +78,7 @@ services:
       - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
       - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
   aw_exif:
-    image: "docker.pkg.github.com/mediaforensics/packages/analyticworker:${ANALYTIC_WORKER_TAG}"
+    image: medifor:2021-04-02
     restart: always
     command:
       - "analyticworker"
@@ -99,7 +99,7 @@ services:
       - "${MEDIFOR_DEMO_DATA_DIR}/input:${CONTAINER_DATA_DIR}/input"
       - "${MEDIFOR_DEMO_DATA_DIR}/output:${CONTAINER_DATA_DIR}/output"
   aw_ta2avg:
-    image: "docker.pkg.github.com/mediaforensics/packages/analyticworker:${ANALYTIC_WORKER_TAG}"
+    image: medifor:2021-04-02
     restart: always
     command:
       - "fusionworker"

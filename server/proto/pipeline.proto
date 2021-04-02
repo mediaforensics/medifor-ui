@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package workflowproto;
+package mediforproto;
 
-option go_package = "gitlab.mediforprogram.com/medifor/analytic-worker/pkg/workflowproto";
+option go_package = "github.com/mediaforensics/medifor/pkg/mediforproto";
 
-import "analytic.proto"; // -I gitlab.mediforprogram.com/medifor/medifor-proto/proto
-import "fusion.proto"; // -I gitlab.mediforprogram.com/medifor/medifor-proto/proto
+import "analytic.proto";
+import "fusion.proto";
 
 enum DetectionStage {
   DETECTION_STAGE_NONE = 0;
@@ -68,7 +68,7 @@ message DetectionRequest {
   string id = 3;
 
   // A Detection proto with just the important request parts filled out.
-  mediforproto.Detection request = 1;
+  Detection request = 1;
 
   // The analytics to run.
   repeated string analytic_id = 2;
@@ -107,19 +107,19 @@ message AnalyticDetectionInfo {
 
   // The Detection with the result and status filled out (and the request).
   // If the response and status are empty (default), then it is not finished.
-  mediforproto.Detection detection = 4;
+  Detection detection = 4;
 }
 
 // DetectionInfo provides details on a given detection event specified by the id.
-// Next Tag: 12
+// Next Tag: 11
 message DetectionInfo {
   // The detection event ID.
   string id = 1;
 
   // A list of input resources for this detection. Usually a singleton, but can
-  // contain multiple if multiple are accepted for this particular kind of
-  // request.
-  repeated mediforproto.Resource req_resources = 11;
+  // contain multiple if multiple are accepted for this particular kind of 
+  // request 
+  repeated Resource req_resources = 11;
 
   // Results for individual analytics.
   repeated AnalyticDetectionInfo analytic_info = 2;
@@ -163,25 +163,25 @@ enum DetectionListVerbosity {
   DETECTION_VERBOSITY_MINIMAL = 1;
 }
 
-// Next Tag: 13
+// Next Tag: 10
 message DetectionListRequest {
-  // How much should be returned? Default all.
+  // How much should be returned? Default: all.
   DetectionListVerbosity verbosity = 12;
 
   // If specified (can be empty), all listed tags (both key and value) must be
   // simultaneously present for a detection ID to be returned.
   map<string, string> tags = 1;
-
+  
   // This contains a "fuzzy meta search" query. It will look through
   // detection metatags for string values that match the given query.
   string meta_query = 10;
 
-  // Filter on dates:
+  // Filter on dates
   // If start time is present (nonzero), all detections must have at least one analytic with a create time >= start.
   // If end time is present (nonzero), all detections must have at least one analytic create time <= end.
   // If either is zero (not present), then the filter is unbounded in that direction.
   DateRange date_range = 11;
-
+  
   // If specified, only returns results from the given list of detection IDs.
   // Good for returning a single detection or one of a few. Not great for very
   // long lists (thousands).
@@ -232,7 +232,7 @@ message FusionRequest{
 
   // A Fusion Proto containing the original probe as well as the detection objects from
   // each analytic that ran over that probe.
-  mediforproto.Fusion request = 2;
+  Fusion request = 2;
 
   // IDs for the fusion analytics
   repeated string fuser_id = 4;
@@ -247,7 +247,7 @@ message FusionRequest{
   string detection_id_out_dir = 6;
 }
 
-// FuserFusionInfo provides details on the status of a fusion being
+// AnalyticDetectionInfo provides details on the status of a detection being
 // performed by a given analytic.
 // Next ID: 5
 message FuserFusionInfo {
@@ -264,7 +264,7 @@ message FuserFusionInfo {
 
   // The Fusion with the result and status filled out (and the request).
   // If the response and status are empty (default), then it is not finished.
-  mediforproto.Fusion fusion = 4;
+  Fusion fusion = 4;
 }
 
 // FusionInfo provides details on a given fusion event specified by the ID.
@@ -311,14 +311,14 @@ message UpdateDetectionTagsRequest {
 
 // DetectionTagInfoRequest asks for high-level information about detection tags.
 message DetectionTagInfoRequest {
-    // If specified, only tags that coexist with the given required tags will
-    // be returned. One possible use of this is to limit tags returned by login
-    // group.
-    map<string, string> require_tags = 1;
+  // If specified, only tags that coexist with the given required tags will
+  // be returned. One possible use of this is to limit tags returned by login
+  // group.
+  map<string, string> require_tags = 1;
 
-    // If specified, all keys prefixed with any value in this list will
-    // not be returned in the result.
-    repeated string skip_prefixes = 2;
+  // If specified, all keys prefixed with any value in this list will
+  // not be returned in the result.
+  repeated string skip_prefixes = 2;
 }
 
 // DetectionTagInfo contains high-level information about detection tags.
@@ -353,9 +353,6 @@ message AnalyticMeta {
 // AnalyticList holds a list of AnalyticMeta configuration metadata objects
 message AnalyticList {
   repeated AnalyticMeta analytics = 1;
-}
-
-message Empty {
 }
 
 service Pipeline {
