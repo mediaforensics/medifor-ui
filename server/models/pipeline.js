@@ -168,7 +168,7 @@ const init = () => {
   });
 
   const workflowProto = grpc.loadPackageDefinition(pipelineDefinition)
-    .workflowproto;
+    .mediforproto;
 
   const host = config.get("WORKFLOW_HOST");
   const port = config.get("WORKFLOW_PORT");

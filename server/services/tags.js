@@ -67,4 +67,4 @@ const init = (proto, packageName, service) => {
   };
 };
 
-const workflowClient = init("pipeline.proto", "workflowproto", "Pipeline");
+const workflowClient = init("pipeline.proto", "mediforproto", "Pipeline");
