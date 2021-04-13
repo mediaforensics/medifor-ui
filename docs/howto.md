@@ -85,7 +85,7 @@ Coming soon!
 
 ### Medifor Helm Chart
 
-Coming soon!
+Please visit the medifor-helm-chart [repository](https://github.com/mediaforensics/medifor-helm-chart).
 
 ### Local Deployment
 
